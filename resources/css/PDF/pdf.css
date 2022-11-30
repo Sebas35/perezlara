@@ -1,0 +1,32 @@
+@page {
+    margin: 0;
+}
+
+body {
+    padding: 45px;
+    font-family: 'Roboto', sans-serif;
+    background-color: #fafbfe;
+}
+
+.table {
+    font-size: 10px;
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+    border-radius: 9px;overflow: hidden;
+    background-color: white;
+}
+
+.thead, .tr {
+    border-bottom: 1px solid #ebebec;
+}
+
+.td {
+    height: 52px;
+}
+
+.img-table {
+    width: 14px;
+    height: 14px;
+}
+

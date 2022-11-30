@@ -1,0 +1,156 @@
+/* Marcador de posición
+   =========== */
+#quotes {
+    background-color: var(--tertiary-color);
+}
+
+/* Contenedor de formulario -> evita desborde del scrollbar
+   =========== */
+.container-form {
+    overflow: hidden;
+}
+
+/* Fieldset donde esta la tabla del formulario
+   =========== */
+.fieldset-table {
+    height: 100%;
+}
+
+/* Formulario
+   =========== */
+.form {
+    overflow-y: scroll;
+
+    width: 983px;
+    height: 583px;
+    padding: 25px 17px 25px 25px;
+}
+
+/* Mensaje -> tabla vacía, no se han seleccionado opciones
+   =========== */
+.message-empty-table {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 100%;
+
+    color: #231f2099;
+
+    font-size: var(--tertiary-font-size);
+}
+
+/* Ocultar mensaje -> Tabla con datos
+   =========== */
+.is-message-empty-table-inactive {
+    display: none;
+}
+
+/* Contenedor de la tabla del formulario -> evita desborde del scrollbar
+   =========== */
+.container-table-quote {
+    display: grid;
+    overflow: hidden;
+
+    border-radius: 20px;
+}
+
+/* Tabla del formulario
+   =========== */
+.table-quote {
+    overflow-x: scroll;
+
+    max-width: 914px;
+    max-height: 409px;
+
+    border-radius: 20px;
+    background: var(--secondary-color);
+
+    border-collapse: collapse;
+}
+
+/* Tabla del formulario con datos
+   =========== */
+.is-table-quote-active {
+    display: block;
+}
+
+/* Encabezado de la tabla
+   =========== */
+.thead-quote {
+    position: sticky;
+    z-index: 2;
+    top: 0;
+
+    background: var(--secondary-color);
+
+    text-align: center;
+}
+
+/* Primera columna de la tabla es fija
+   =========== */
+.thead-quote tr:first-child th:first-child,
+.tbody-quote tr td:first-child,
+.tfoot-quote tr th:first-child {
+    position: sticky;
+    left: 0;
+
+    padding-left: 25px;
+
+    background-color: var(--secondary-color);
+}
+
+/* Bordes para elemento th y td
+   =========== */
+.table-quote tr th:not(.table-quote tr th:last-child),
+.table-quote tr td:not(.table-quote tr td:last-child) {
+    border-right: 1px solid var(--quaternary-color);
+}
+
+/* Filas de la tabla
+   =========== */
+.table-quote tr {
+    height: 50px;
+
+    border-bottom: 1px solid var(--quaternary-color);
+}
+
+/* Primera columna de la tabla
+   =========== */
+.table-quote tr td:first-child {
+    min-width: 250px;
+    max-width: 250px;
+}
+
+/* Texto centrado para columnas de la tabla ( desde la segunda columna en adelante)
+   =========== */
+.table-quote tr td ~ td,
+.tfoot-quote {
+    text-align: center;
+}
+
+/* Label -> input de tabla
+   =========== */
+.label-title {
+    margin: 0 20px 0 20px;
+}
+
+/* Input de tabla
+   =========== */
+.input-title {
+    width: 120px;
+    height: 28px;
+    padding: 0 10px;
+
+    border: 1px solid #dcdcdc;
+    border-radius: 9px;
+
+    font-size: var(--quinary-font-size);
+}
+
+/* Focus para input de tabla
+   =========== */
+.input-title:focus {
+    outline: 1px solid var(--tertiary-color);
+}
+

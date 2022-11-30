@@ -1,0 +1,81 @@
+/* Marcador de posición
+   =========== */
+#policies {
+    background-color: var(--tertiary-color);
+}
+
+.container-form {
+    overflow: hidden;
+}
+
+.form {
+    width: 763px;
+}
+
+.table-show-quotes {
+    border-collapse: collapse;
+    background: var(--secondary-color);
+    box-shadow: var(--primary-box-shadow);
+    border-radius: 11px;
+    text-align: center;
+}
+
+.tr-thead-quotes {
+    border-bottom: 1px solid var(--quaternary-color);
+}
+
+.td-thead-quotes {
+    padding: 12px 0;
+}
+
+.td-body-quotes {
+    padding: 12px 0;
+}
+
+.table-show-quotes .container-img {
+    max-width: 200px;
+}
+
+.img-insurers-quotes {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 9px;
+    transition: box-shadow 300ms;
+}
+
+.is-quote-selected {
+    background: var(--quaternary-color);
+}
+
+.is-insurer-quote-selected {
+    background: var(--secondary-color);
+}
+
+.img-insurers-quotes:hover {
+    box-shadow: var(--primary-box-shadow);
+    background: var(--secondary-color);
+}
+
+.pop-filename {
+    left: 149px;
+    transform: translateY(0);
+    max-width: 278px;
+    transition: opacity 100ms, transform 600ms;
+}
+
+.pop-filename::before {
+    top: calc(100% + 6px);
+    left: 20px;
+
+    border-color: var(--tertiary-color) transparent transparent transparent;
+}
+
+.filename:hover ~ .pop-filename, .pop-filename:hover {
+    visibility: visible;
+
+    opacity: 1;
+
+    transform: translateY(-38px);
+}
