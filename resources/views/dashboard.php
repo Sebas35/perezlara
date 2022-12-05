@@ -2,7 +2,7 @@
 
 $title = 'Dashboard';
 $css_template = false;
-$css = '<link rel="stylesheet" href="' . css('dashboard.css') . '">';
+$css = '<link rel="stylesheet" href="' . ('http://localhost/perezlara/resources/css/dashboard.css') . '">';
 $js = '<script src="' . js('cloud.js') . '"></script>' .
 $js = '<script src="' . js('actions/dashboard.js') . '"></script>' .
       '<script src="' . js('input.js') . '"></script>' .
