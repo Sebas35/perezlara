@@ -1,6 +1,7 @@
 composer.phar
 /vendor/
 .env
+.idea/
 upload-367301-fd3e19b47aa0.json
 
 # Commit your application's lock file https://getcomposer.org/doc/01-basic-usage.md#commit-your-composer-lock-file-to-version-control
