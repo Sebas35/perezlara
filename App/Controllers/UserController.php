@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Traits\Controllers\InsurerInsuranceActive;
 use Exception;
 use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 use Mail\Mail;
 
 class UserController extends Controller
@@ -99,9 +100,16 @@ class UserController extends Controller
             if ($login === false) {
                 throw new Exception('Usuario y/o contraseña incorrectos');
             }
-            echo json_encode($login);
+            $payload = [
+                'exp' => time() + 3600,
+                'data' => $login,
+            ];
+            $jwt = JWT::encode($payload, $_ENV['PRIVATE_KEY'],'RS256');
+            setcookie('token',$jwt);
+            echo json_encode($jwt);
+//            $decoded = JWT::decode($jwt, new Key($_ENV['PUBLIC_KEY'], 'RS256'));
         } catch (Exception $e) {
-            echo json_encode($e -> getMessage());
+            echo json_encode(['error' => $e -> getMessage()]);
         }
     }
 

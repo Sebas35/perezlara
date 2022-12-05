@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Traits\Models\VerifyFileService;
-use Enum\Directories;
 use Exception;
 use PDO;
 use PDOException;
@@ -141,7 +140,7 @@ class Sinister extends Model
         try {
             $files = [];
             foreach ($this -> file_service as $file) {
-                $upload_file = $file -> upload(Directories::SINISTERS);
+                $upload_file = $file -> upload('16WmxbFqXrazXMpANgbUD65s33t8rMAr9');
                 if (is_string($upload_file)) {
                     throw new Exception($upload_file);
                 }

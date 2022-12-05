@@ -16,11 +16,11 @@ class InsurerController extends Controller
     public function create(Insurer $insurer): void
     {
         try {
-            $file_service = $insurer -> upload();
-            if (is_string($file_service)) {
-                throw new Exception('No se pudo cargar el archivo. ' . $file_service);
+            $cloud_file = $insurer -> upload();
+            if (is_object($cloud_file)) {
+                throw new Exception('No se pudo cargar el archivo. ' . $cloud_file -> getMessage());
             }
-            $insurer -> setFileService($file_service['id']);
+            $insurer -> setLogo($cloud_file);
             $new_insurer = $insurer -> create();
             if ($new_insurer !== true) {
                 throw new Exception($new_insurer);

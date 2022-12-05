@@ -18,7 +18,7 @@
 
 /* Antes del label de checkbox -> Representa el circulo a chequear
    =========== */
-.insurance-list li:before,
+.insurance-list .insurance:before,
 .label-checkbox:before {
     display: block;
 
@@ -35,7 +35,7 @@
 
 /* Checkbox chequeado
    =========== */
-.insurance-list li:before,
+.insurance-list .insurance:before,
 .checkbox:checked + .label-checkbox:before {
     border: none;
     background-color: var(--primary-color);

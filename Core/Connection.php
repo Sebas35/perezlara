@@ -15,12 +15,11 @@ class Connection
 
     public function __construct()
     {
-        $credenciales = ini();
-        $this -> driver = $credenciales['DB_CONNECTION'];
-        $this -> hostname = $credenciales['DB_HOST'];
-        $this -> database = $credenciales['DB_DATABASE'];
-        $this -> username = $credenciales['DB_USERNAME'];
-        $this -> password = $credenciales['DB_PASSWORD'];
+        $this -> driver = $_ENV['DB_CONNECTION'];
+        $this -> hostname = $_ENV['DB_HOST'];
+        $this -> database = $_ENV['DB_DATABASE'];
+        $this -> username = $_ENV['DB_USERNAME'];
+        $this -> password = $_ENV['DB_PASSWORD'];
     }
 
     public function connect(): PDO

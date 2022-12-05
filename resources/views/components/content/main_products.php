@@ -21,22 +21,21 @@
             ?>
         <form id="modal-form" class="container-form form" aria-labelledby="title-form">
             <div class="header-modal">
-                <h1 id="title-form" class="title-form">Nueva aseguradora</h1>
+                <h1 id="title-form" class="title-form"></h1>
                 <img class="close-modal" data-dismiss="modal2" aria-label="Cerrar"
                      src="<?php
                          echo icon('buttons/closeDark.svg'); ?>" alt="">
             </div>
             <div class="body-modal-f">
+                <img src="" alt="" id="icon-product" class="icon-product is-icon-product-inactive">
                 <?php
                     input('Nombre de la aseguradora','text', 'product');
             select('Seguros', null, true, 'group-insurances');
             select('Aseguradoras', null , true, 'group-insurers');
-            input_file();
+            input_file(null,true);
             ?>
             </div>
-            <button id="send-form" type="submit" class="primary-button button-is-red button-is-block">Registrar
-                aseguradora
-            </button>
+            <button id="send-form" type="submit" class="primary-button button-is-red button-is-block"></button>
         </form>
     </div>
 </header>

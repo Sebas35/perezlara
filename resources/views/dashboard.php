@@ -3,7 +3,7 @@
 $title = 'Dashboard';
 $css_template = false;
 $css = '<link rel="stylesheet" href="' . css('dashboard.css') . '">';
-$js = '<script src="' . js('drive.js') . '"></script>' .
+$js = '<script src="' . js('cloud.js') . '"></script>' .
 $js = '<script src="' . js('actions/dashboard.js') . '"></script>' .
       '<script src="' . js('input.js') . '"></script>' .
       '<script src="' . view('components/form_elements/dropdown/filter_select.js') . '"></script>'.

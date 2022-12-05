@@ -13,9 +13,9 @@ true_confirm.addEventListener ('click', remove);
 function open_context_menu(e){
     e.preventDefault ();
     context_menu.classList.add ('is-context-menu-active');
-    context_menu.style.top = e.clientY + context_menu.offsetHeight > window.innerHeight
-                             ? window.innerHeight - context_menu.offsetHeight - 1 + 'px'
-                             : e.clientY + 'px';
+    context_menu.style.top = e.clientY + scrollY + context_menu.offsetHeight > (window.innerHeight + window.scrollY)
+                             ? (window.innerHeight + window.scrollY) - context_menu.offsetHeight - 1 + 'px'
+                             : e.clientY + scrollY + 'px';
     context_menu.style.left = e.clientX + context_menu.offsetWidth > window.innerWidth
                               ? window.innerWidth - context_menu.offsetWidth + 'px'
                               : e.clientX + 'px';

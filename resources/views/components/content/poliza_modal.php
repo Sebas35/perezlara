@@ -17,18 +17,18 @@ require_once view('components/form_elements/dropdown/select.php');
                 <div class="body-modal">
                     <?php
                     input('Número de documento');
-input('Cliente', 'text', null, null, 'disabled');
-?>
+                    input('Cliente', 'text', null, null, 'disabled');
+                    ?>
                 </div>
             </fieldset>
             <fieldset id="quotes-fieldset" class="fieldset is-hidden">
                 <legend class="legend">Cotización</legend>
                 <table class="table-show-quotes">
                     <thead>
-                        <tr class="tr-thead-quotes">
-                            <td class="td-thead-quotes">Seguro</td>
-                            <td class="td-thead-quotes">Aseguradoras</td>
-                        </tr>
+                    <tr class="tr-thead-quotes">
+                        <td class="td-thead-quotes">Seguro</td>
+                        <td class="td-thead-quotes">Aseguradoras</td>
+                    </tr>
                     </thead>
                     <tbody id="quotes-info"></tbody>
                 </table>
@@ -37,27 +37,23 @@ input('Cliente', 'text', null, null, 'disabled');
                 <legend class="legend">Información póliza</legend>
                 <div class="body-modal">
                     <?php
-input('Codigo');
-input('Seguro','text',null,null,'disabled');
-input('Aseguradora','text',null,null,'disabled');
-input('Valor asegurado','text',null,null,'disabled');
-input('Valor prima','text',null,null,'disabled');
-select('Fecha de inicio');
-select('Fecha de vencimiento');
-select('Fecha de pago');
-input('Cantidad de meses');
-?>
+                    input('Codigo');
+                    input('Seguro', 'text', null, null, 'disabled');
+                    input('Aseguradora', 'text', null, null, 'disabled');
+                    input('Valor asegurado', 'text', null, null, 'disabled');
+                    input('Valor prima', 'text', null, null, 'disabled');
+                    select('Fecha de inicio');
+                    select('Fecha de vencimiento');
+                    select('Fecha de pago');
+                    input('Cantidad de meses');
+                    ?>
                 </div>
             </fieldset>
         </div>
         <div class="footer-modal" id="footer-modal">
-            <div class="container-file">
-                <?php
-                input_file();
-?>
-                <span id="filename" class="filename"></span>
-                <span id="pop-filename" class="title pop-filename"></span>
-            </div>
+            <?php
+            input_file(null, true);
+            ?>
             <div class="footer-modal">
                 <button id="clean-form" type="reset" class="primary-button button-is-black">Limpiar formulario</button>
                 <button id="send-form" type="submit" class="primary-button button-is-red">Registrar póliza</button>

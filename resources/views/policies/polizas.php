@@ -3,6 +3,7 @@
 $title = 'Pólizas';
 $css = '<link rel="stylesheet" href="' . css('policies.css') . '">';
 $js = '<script src="' . js('actions/policy.js') . '"></script>'.
+      '<script src="' . js('input_file.js') . '"></script>'.
       '<script src="' . view('components/form_elements/dropdown/filter_select.js') . '"></script>';
 $modal = 'poliza_modal.php';
 $pdf = 'polizas/pdf';

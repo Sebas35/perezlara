@@ -1,4 +1,5 @@
-const inputs = document.querySelectorAll ('.input:not(.select)'), option = document.getElementsByClassName ('option');
+const inputs = document.querySelectorAll ('.input:not(.select)'),
+    option = document.querySelectorAll ('.option:not(.product-select .option)');
 
 inputs.forEach (e => e.addEventListener ('blur', blur))
 Array.from (option).forEach (e => e.addEventListener ('click', choose))

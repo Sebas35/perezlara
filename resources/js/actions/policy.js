@@ -12,19 +12,14 @@ const code = document.getElementById ('codigo'),
     expiration_date = document.getElementById ('selected-fecha-vencimiento-select'),
     payment_date = document.getElementById ('selected-fecha-pago-select'),
     number_months = document.getElementById ('cantidad-meses'),
-    file = document.getElementById ('file'),
-    filename = document.getElementById('filename'),
-    pop_filename = document.getElementById('pop-filename'),
     filter_content_insurance = document.getElementById ('seguro-filter-content'),
     filter_content_insurer = document.getElementById ('aseguradora-filter-content');
 let option_quote;
 
 client_document_number.addEventListener ('input', show_quotes);
-file.addEventListener('input',show_file);
 
 function show_file(e) {
-    filename.textContent = e.target.files[0].name;
-    pop_filename.textContent = e.target.files[0].name;
+    info_file(e);
 }
 
 async function show_quotes() {
@@ -56,7 +51,7 @@ function table_quotes(data) {
             const img = document.createElement ('img');
             img.dataset.id = ids_aseguradora_cotizante[index];
             img.className = 'img-insurers-quotes';
-            img.src = e.toString ();
+            img.src = CLOUD.img + e.toString ();
             img.role = 'option';
             second_td.appendChild (img);
             img.addEventListener('click', quote_data);
@@ -116,7 +111,7 @@ async function index() {
 function common_data(){
     let data = new FormData ();
     data.append ('code', code.value);
-    data.append ('FileService', '');
+    data.append ('DriveFile', '');
     data.append ('start_date', start_date.textContent);
     data.append ('expiration_date', expiration_date.textContent);
     data.append ('payment_date', payment_date.textContent);

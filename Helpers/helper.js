@@ -9,10 +9,10 @@ const filters = document.querySelectorAll ('.filter ~ .modal'),
     send_form = document.getElementById ('send-form'),
     button_filter = document.getElementById ('button-filter'),
     button_clean = document.getElementById ('button-clean');
-let action;
+
+let action = true;
 
 tbody.addEventListener ('contextmenu', open_context_menu);
-
 new_button.addEventListener ('click', () => {
     action = true;
     reset_inputs();
@@ -22,11 +22,12 @@ new_button.addEventListener ('click', () => {
 button_filter.addEventListener ('click', filter_data);
 button_clean.addEventListener ('click', clean);
 pdf.addEventListener ('click', createDoc);
+
 excel.addEventListener ('click', createDoc);
 
 function trigger(e) {
     e.preventDefault();
-    action ? create () : update ();
+    action ? create() : update();
 }
 
 function change_form_text(title, btn_send) {

@@ -28,6 +28,16 @@ main {
     width: 380px;
 }
 
+.icon-product {
+    width: 80px;
+    height: 80px;
+    align-self: center;
+}
+
+.is-icon-product-inactive {
+    display: none;
+}
+
 .product-select {
     top: 0;
     left: 107%;
@@ -171,4 +181,10 @@ main {
 .insurance {
     display: flex;
     align-items: center;
+}
+
+.insurance-list .is-insurance-inactive:before {
+    background-color: var(--tertiary-color);
+    background-image: url('../icons/buttons/close.svg');
+    background-size: 9px;
 }

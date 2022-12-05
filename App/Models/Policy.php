@@ -3,12 +3,11 @@
 namespace App\Models;
 
 use App\Traits\Models\VerifyFileService;
-use Enum\Directories;
 use Exception;
 use PDO;
 use PDOException;
 use PDOStatement;
-use Storage\FileService;
+use Storage\DriveFile;
 
 class Policy extends Model
 {
@@ -16,7 +15,7 @@ class Policy extends Model
 
     private int $code;
     private Quote $quote;
-    private ?FileService $file_service;
+    private ?DriveFile $drive_service;
     private string $start_date;
     private string $expiration_date;
     private string $payment_date;
@@ -24,7 +23,7 @@ class Policy extends Model
 
     public function __construct7(
         int $code,
-        ?FileService $file,
+        ?DriveFile $file,
         string $start_date,
         string $expiration_date,
         string $payment_date,
@@ -32,7 +31,7 @@ class Policy extends Model
         Quote $quote,
     ): void {
         $this -> __construct1($code);
-        $this -> file_service = $file;
+        $this -> drive_service = $file;
         $this -> start_date = $start_date;
         $this -> expiration_date = $expiration_date;
         $this -> payment_date = $payment_date;
@@ -49,7 +48,7 @@ class Policy extends Model
     {
         return $this -> connection -> query(
             'select `Codigo póliza`, Fecha, Cliente, Seguro, Aseguradora, `Fecha de inicio`, 
-       `Fecha de vencimiento`, `Valor asegurado`, `Valor prima`, `Fecha de pago`, Estado, `Fecha de actualización` from view_poliza'
+       `Fecha de vencimiento`, `Valor asegurado`, id_archivo, `Valor prima`, `Fecha de pago`, Estado, `Fecha de actualización` from view_poliza'
         ) -> fetchAll();
     }
 
@@ -129,12 +128,12 @@ class Policy extends Model
 
     public function upload(): array|string
     {
-        return $this -> file_service -> upload(Directories::POLICIES);
+        return $this -> drive_service -> upload('1GR1sZsZGk4SqR5ZTse0v8WDfapxH_fQx');
     }
 
     public function updateFile(): array|string
     {
-        return $this -> file_service -> update();
+        return $this -> drive_service -> update();
     }
 
     /**

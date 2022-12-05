@@ -7,24 +7,20 @@ use Exception;
 use Google\Client;
 use Google\Service\Drive;
 
-class FileService
+class DriveFile extends GoogleService
 {
     use TConstruct;
 
     private string $id;
-    private string $name;
-    private string $type;
-    private string $tmp_name;
     private Drive $drive_service;
 
     public function __construct()
     {
-        putenv('GOOGLE_APPLICATION_CREDENTIALS=upload-367301-fd3e19b47aa0.json');
+        parent::__construct(func_get_args());
         $client = new Client();
         $client -> useApplicationDefaultCredentials();
         $client -> addScope(Drive::DRIVE_FILE);
         $this -> drive_service = new Drive($client);
-        call_user_func_array([$this, 'construct'], func_get_args());
     }
 
     public function __construct1(string $id) :void
@@ -36,13 +32,6 @@ class FileService
     {
         $this -> id = $id;
         $this -> name = $name;
-    }
-
-    public function __construct3(string $name, string $type, string $tmp_name) :void
-    {
-        $this -> name = $name;
-        $this -> type = $type;
-        $this -> tmp_name = $tmp_name;
     }
 
     public function __construct4(string $id, string $name, string $type, string $tmp_name) :void

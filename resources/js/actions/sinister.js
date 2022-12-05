@@ -29,7 +29,7 @@ function files(files, ids = null){
         const id = 'file' + file_list.childElementCount;
         checkbox (id, li, e.name ?? e, ids ? ids[index] : ids, true);
         file_list.appendChild (li);
-        if (!ids){
+        if (!ids) {
             document.getElementById (id).addEventListener ('input', remove_file);
         }
     });

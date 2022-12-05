@@ -4,7 +4,6 @@ namespace App\Controllers;
 
 use App\Models\Client;
 use App\Traits\Controllers\PDF;
-use Dompdf\Dompdf;
 use Exception;
 
 class ClientController extends Controller

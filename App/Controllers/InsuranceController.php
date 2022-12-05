@@ -15,15 +15,10 @@ class InsuranceController extends Controller
     public function create(Insurance $insurance): void
     {
         try {
-            $file_service = $insurance -> upload();
-            if (is_string($file_service)) {
-                throw new Exception('No se pudo cargar el archivo. ' . $file_service);
-            }
-            $insurance -> setFileService($file_service['id']);
             $new_insurance = $insurance -> create();
             if ($new_insurance !== true) {
                 throw new Exception($new_insurance);
-            };
+            }
             $this -> response('Seguro registrado', $insurance -> card());
         } catch (Exception $e) {
             echo json_encode($e -> getMessage());

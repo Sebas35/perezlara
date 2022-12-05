@@ -55,10 +55,10 @@ if (isset($js)) {
 <?php if (!isset($content)): ?>
 <script src="<?php echo js('input.js') ?>"></script>
 <script src="<?php echo js('modal_static.js') ?>"></script>
+<script src="<?php echo js('context_menu.js') ?>"></script>
 <script src="<?php echo helper_js('helper.js') ?>"></script>
 <script src="<?php echo helper_js('helper_form.js') ?>"></script>
-<script src="<?php echo js('context_menu.js') ?>"></script>
-<script src="<?php echo js('drive.js') ?>"></script>
+<script src="<?php echo js('cloud.js') ?>"></script>
 <script src="<?php echo js('table.js') ?>"></script>
 <?php endif; ?>
 

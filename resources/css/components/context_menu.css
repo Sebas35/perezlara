@@ -11,6 +11,7 @@
     bottom: 0;
 
     width: 188px;
+    height: fit-content;
     margin: 0;
     padding: 0;
 
@@ -31,8 +32,6 @@
   =========== */
 .is-context-menu-active {
     visibility: visible;
-
-    height: fit-content;
 
     opacity: 1;
 }

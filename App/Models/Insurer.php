@@ -2,17 +2,17 @@
 
 namespace App\Models;
 
-use Enum\Directories;
+use Exception;
 use PDO;
 use PDOException;
 use PDOStatement;
-use Storage\FileService;
+use Storage\CloudFile;
 
 class Insurer extends Model
 {
     private int $id;
     private string $insurer;
-    private string|FileService $file_service;
+    private CloudFile|null|string $logo;
     private array $insurances;
 
     public function __construct1(int $id): void
@@ -20,17 +20,19 @@ class Insurer extends Model
         $this -> id = $id;
     }
 
-    public function __construct3(string $insurer, FileService $file_service, array $insurances): void
+    public function __construct3(string $insurer, CloudFile $logo, array $insurances): void
     {
         $this -> insurer = $insurer;
-        $this -> file_service = $file_service;
+        $this -> logo = $logo;
         $this -> insurances = $insurances;
     }
 
-    public function __construct4(int $id, string $insurer, FileService $file_service, array $insurances): void
+    public function __construct4(int $id, string $insurer, ?CloudFile $logo, array $insurances): void
     {
-        $this -> __construct1($id);
-        $this -> __construct3($insurer,$file_service,$insurances);
+        $this -> id = $id;
+        $this -> insurer = $insurer;
+        $this -> logo = $logo;
+        $this -> insurances = $insurances;
     }
 
     public function index(): bool|array
@@ -44,10 +46,10 @@ class Insurer extends Model
     public function card(): bool|array
     {
         return $this -> connection -> query(
-            'SELECT group_concat(s.seguro) AS seguros ,a.logo AS logo, a.id_aseguradora AS id_aseguradora, a.aseguradora AS aseguradora 
+            'SELECT group_concat(s.seguro) AS seguros, GROUP_CONCAT(estado) AS estados, a.logo AS logo, a.id_aseguradora AS id_aseguradora, a.aseguradora AS aseguradora 
                                                       FROM aseguradora a 
                                                       LEFT JOIN seguro_aseguradora sa ON sa.aseguradora = a.id_aseguradora 
-                                                      LEFT JOIN seguro s ON sa.seguro = s.id_seguro GROUP BY a.aseguradora'
+                                                      LEFT JOIN seguro s ON sa.seguro = s.id_seguro  GROUP BY a.aseguradora'
         ) -> fetchAll();
     }
 
@@ -59,44 +61,79 @@ class Insurer extends Model
             $insurer -> execute();
             $this -> id = $insurer -> fetchColumn();
             $insurer -> closeCursor();
-            foreach ($this -> insurances as $insurance) {
-                $insurance_insurer = $this -> connection -> prepare('call sp_insert_seguro_aseguradora(:insurance,:insurer)');
-                $id_insurance = $insurance -> getId();
-                $insurance_insurer -> bindParam('insurance',$id_insurance);
-                $insurance_insurer -> bindParam('insurer',$this -> id);
-                $insurance_insurer -> execute();
-            }
+            $this -> insert_insurances($this -> insurances);
             return true;
         } catch (PDOException $e) {
             return $e -> getMessage();
         }
     }
 
-    public function upload(): array|string
-    {
-        return $this -> file_service -> upload(Directories::INSURERS);
+    public function insert_insurances(array $insurances) {
+        try {
+            foreach ($insurances as $insurance) {
+                $insurance_insurer = $this -> connection -> prepare('call sp_insert_seguro_aseguradora(:insurance,:insurer)');
+                $id_insurance = $insurance -> getId();
+                $insurance_insurer -> bindParam('insurance',$id_insurance);
+                $insurance_insurer -> bindParam('insurer',$this -> id);
+                $insurance_insurer -> execute();
+            }
+        } catch (PDOException $e) {
+            echo $e -> getMessage();
+        }
     }
 
     public function params(bool|PDOStatement $sql): void
     {
         $sql -> bindParam('insurer', $this -> insurer);
-        $sql -> bindParam('logo', $this -> file_service);
+        $sql -> bindParam('logo', $this -> logo);
     }
 
     public function show(): bool|array
     {
-        $insurance = $this -> connection -> prepare('select * from aseguradora where id_aseguradora = :id_insurer');
+        $insurance = $this -> connection -> prepare('SELECT a.aseguradora AS aseguradora, a.logo as logo, GROUP_CONCAT(s.id_seguro) AS id_seguros, GROUP_CONCAT(sa.id_seguro_aseguradora)AS id_seguros_aseguradora
+                                                      FROM aseguradora a
+                                                      LEFT JOIN seguro_aseguradora sa ON sa.aseguradora = a.id_aseguradora
+                                                      LEFT JOIN seguro s ON sa.seguro = s.id_seguro WHERE id_aseguradora = :id_insurer AND estado = 1');
         $insurance -> bindParam('id_insurer', $this -> id, PDO::PARAM_INT);
         $insurance -> execute();
         return $insurance -> fetch();
     }
 
-    public function update(): void
+    public function update(): bool|string
     {
-        $insurer = $this -> connection -> prepare('call sp_update_aseguradora(:id_insurer,:insurer,:logo)');
-        $insurer -> bindParam('id_insurer', $this -> id, PDO::PARAM_INT);
-        $this -> params($insurer);
-        $insurer -> execute();
+        try {
+            $insurer = $this -> connection -> prepare('call sp_update_aseguradora(:id_insurer,:insurer,:logo)');
+            $insurer -> bindParam('id_insurer', $this -> id, PDO::PARAM_INT);
+            $this -> params($insurer);
+            $insurer -> execute();
+            $insurer -> closeCursor();
+            foreach ($this -> insurances['collection_create'] as $insurance) {
+                $insurance_insurer = $this -> connection -> prepare('call sp_insert_seguro_aseguradora(:insurance,:insurer)');
+                $id_insurance = $insurance -> getId();
+                $insurance_insurer -> bindParam('insurance',$id_insurance);
+                $insurance_insurer -> bindParam('insurer',$this -> id);
+                $insurance_insurer -> execute();
+            }
+            $sql = 'UPDATE seguro_aseguradora SET estado = 2 WHERE aseguradora = :insurer AND seguro NOT IN(';
+            $insurances = array_merge($this -> insurances['collection_create'],$this ->
+            insurances['collection_keep']);
+            $tam = count($insurances) - 1;
+            for($i = 0; $i < $tam; $i++) {
+                $sql .= ':id_insurance' . $i . ',';
+            }
+            $sql .= ':id_insurance' . $tam . ')';
+            $insurances_insurer_inactivate = $this -> connection -> prepare($sql);
+            $insurances_insurer_inactivate -> bindParam('insurer', $this -> id, PDO::PARAM_INT);
+            foreach ($insurances as $index => $insurance) {
+                $param = 'id_insurance' . $index;
+                $$param = $insurance -> getId();
+                $insurances_insurer_inactivate -> bindParam($param, $$param, PDO::PARAM_INT);
+            }
+            $insurances_insurer_inactivate -> execute();
+            return true;
+        } catch (PDOException $e) {
+            return $e -> getMessage();
+        }
     }
 
     public function delete(): void
@@ -114,8 +151,16 @@ class Insurer extends Model
         return $this -> id;
     }
 
-    public function setFileService(string $file_service) :void
+    public function upload(): Exception|string
     {
-        $this -> file_service = $file_service;
+        return $this -> logo -> upload('Aseguradoras');
+    }
+
+    /**
+     * @param string $logo
+     */
+    public function setLogo(string $logo) :void
+    {
+        $this -> logo = $logo;
     }
 }

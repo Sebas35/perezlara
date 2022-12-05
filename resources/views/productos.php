@@ -4,9 +4,10 @@ $title = 'Productos';
 $css_template = false;
 $css = '<link rel="stylesheet" href="' . css('products.css') . '">';
 $js = '<script src="' . js('modal_static.js') . '"></script>' .
-$js = '<script src="' . js('drive.js') . '"></script>' .
+$js = '<script src="' . js('cloud.js') . '"></script>' .
       '<script src="' . js('input.js') . '"></script>' .
       '<script src="' . js('actions/products.js') . '"></script>' .
+      '<script src="' . js('input_file.js') . '"></script>'.
       '<script src="' . js('context_menu.js') . '"></script>' .
       '<script src="' . helper_js('helper.js') . '"></script>' .
       '<script src="' . helper_js('helper_form.js') . '"></script>' .

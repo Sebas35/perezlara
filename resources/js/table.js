@@ -8,7 +8,7 @@ function table(data) {
     if (data.length > 0){
         const keys = Object.keys (data[0]);
         thead.insertRow().classList.add('row');
-        keys.forEach(e => {
+        keys.filter(e => e !== 'id_archivo').forEach(e => {
             const th = document.createElement('th');
             th.appendChild(document.createTextNode(e));
             thead.rows[0].appendChild(th);
@@ -17,19 +17,24 @@ function table(data) {
             const tr = tbody.insertRow ();
             tr.classList.add ('row');
             for (let j = 0; j < keys.length; j++) {
-                const td = tr.insertCell ();
-                if (['Aseguradora','Foto'].includes(keys[j])){
-                    td.classList.add ('container-img');
-                    e[keys[j]].split (',').forEach (e => {
-                        const img = document.createElement ('img');
-                        img.className = 'img-table';
-                        img.src = DRIVE.img + e.toString ();
-                        td.appendChild (img);
-                    });
+                if(keys[j] === 'id_archivo') {
+                    tr.dataset.href = CLOUD.file + e['id_archivo'];
                 } else {
-                    td.appendChild (document.createTextNode (e[keys[j]]));
+                    const td = tr.insertCell ();
+                    if (['Aseguradora','Foto'].includes(keys[j])){
+                        td.classList.add ('container-img');
+                        e[keys[j]].split (',').forEach (e => {
+                            const img = document.createElement ('img');
+                            img.className = 'img-table';
+                            img.src = CLOUD.insurer + e.toString ();
+                            td.appendChild (img);
+                        });
+                    }  else {
+                        td.appendChild (document.createTextNode (e[keys[j]]));
+                    }
                 }
             }
+            tr.addEventListener('dblclick',open_file);
         });
         tbody.insertRow ();
     } else {
@@ -42,4 +47,6 @@ function table(data) {
     }
 }
 
-
+function open_file(e) {
+    window.open(e.target.closest('.row').dataset.href);
+}

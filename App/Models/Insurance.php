@@ -2,17 +2,15 @@
 
 namespace App\Models;
 
-use Enum\Directories;
 use PDO;
 use PDOException;
 use PDOStatement;
-use Storage\FileService;
 
 class Insurance extends Model
 {
     private int $id;
     private string $insurance;
-    private string|FileService $file_service;
+    private string $image;
     private array $insurers;
 
     public function __construct1(int $id): void
@@ -20,14 +18,14 @@ class Insurance extends Model
         $this -> id = $id;
     }
 
-    public function __construct3(string $insurance, FileService $image, array $insurers): void
+    public function __construct3(string $insurance, string $image, array $insurers): void
     {
         $this -> insurance = $insurance;
-        $this -> file_service = $image;
+        $this -> image = $image;
         $this -> insurers = $insurers;
     }
 
-    public function __construct4(int $id, string $insurance, FileService $image, array $insurers): void
+    public function __construct4(int $id, string $insurance, string $image, array $insurers): void
     {
         $this -> __construct1($id);
         $this -> __construct3($insurance, $image, $insurers);
@@ -65,7 +63,7 @@ class Insurance extends Model
     public function params(bool|PDOStatement $sql): void
     {
         $sql -> bindParam('insurance', $this -> insurance);
-        $sql -> bindParam('image', $this -> file_service);
+        $sql -> bindParam('image', $this -> image);
     }
 
     public function show(): bool|array
@@ -76,11 +74,6 @@ class Insurance extends Model
         $insurance -> bindParam('id_insurance', $this -> id, PDO::PARAM_INT);
         $insurance -> execute();
         return $insurance -> fetch();
-    }
-
-    public function upload(): array|string
-    {
-        return $this -> file_service -> upload(Directories::INSURANCES);
     }
 
     public function card(): bool|array
@@ -109,10 +102,5 @@ class Insurance extends Model
     public function getId(): int
     {
         return $this -> id;
-    }
-
-    public function setFileService(string $file_service) :void
-    {
-        $this -> file_service = $file_service;
     }
 }

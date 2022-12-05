@@ -22,16 +22,18 @@ async function create(){
 }
 
 async function login(e){
-    e.preventDefault ();
-    const res = await fetch ('usuarios/login', {
-        method: 'POST',
-        body: new FormData (login_form)
-    })
-    const data = await res.json ();
-    if (typeof data === 'string') {
+    try {
+        e.preventDefault ();
+        const res = await fetch ('usuarios/login', {
+            method: 'POST',
+            body: new FormData (login_form)
+        })
+        const data = await res.json ();
+        if (data.error) {
+            throw new Error(data.error);
+        }
+    } catch (e) {
         clave.value = null;
-        alert_login.textContent = data;
-    } else {
-        window.location.href = 'dashboard';
+        alert_login.textContent = e;
     }
 }

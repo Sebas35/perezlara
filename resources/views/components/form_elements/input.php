@@ -25,10 +25,18 @@ function input(
             </div>";
 }
 
-function input_file(string|null $optional = null): void
+function input_file(string|null $optional = null, bool $filename = false): void
 {
+    if ($filename) {
+        echo '<div class="container-file">';
+    }
     echo "<label class='label-file' for='file'>
                 Cargar archivo
                 <input id='file' type='file' class='file' $optional>
           </label>";
+    if ($filename) {
+        echo '<span id="filename" class="filename"></span>
+              <span id="pop-filename" class="title pop-filename"></span>
+              </div>';
+    }
 }
