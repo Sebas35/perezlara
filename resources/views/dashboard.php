@@ -12,6 +12,4 @@ $content = 'main_dashboard.php';
 $group = 'search.php';
 $filters = [['Seguro'], ['Aseguradora'],];
 $buttons_filters = false;
-echo $css;
-echo $js;
-require_once ('components/app/app.php');
+require_once 'components/app/app.php';
