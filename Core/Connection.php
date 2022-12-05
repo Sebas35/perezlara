@@ -8,6 +8,7 @@ use PDOException;
 class Connection
 {
     private string $driver;
+    private int $port;
     private string $hostname;
     private string $database;
     private string $username;
@@ -17,6 +18,7 @@ class Connection
     {
         $this -> driver = $_ENV['DB_CONNECTION'];
         $this -> hostname = $_ENV['DB_HOST'];
+        $this -> port = $_ENV['DB_PORT'];
         $this -> database = $_ENV['DB_DATABASE'];
         $this -> username = $_ENV['DB_USERNAME'];
         $this -> password = $_ENV['DB_PASSWORD'];
@@ -26,7 +28,8 @@ class Connection
     {
         try {
             $connection = new PDO(
-                $this -> driver . ':host=' . $this -> hostname . ';dbname=' . $this -> database,
+                $this -> driver . ':host=' . $this -> hostname . ';port=' . $this -> port . ';dbname=' . $this ->
+                database,
                 $this -> username,
                 $this -> password,
                 options: [
