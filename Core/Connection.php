@@ -22,11 +22,6 @@ class Connection
         $this -> database = $_ENV['DB_DATABASE'];
         $this -> username = $_ENV['DB_USERNAME'];
         $this -> password = $_ENV['DB_PASSWORD'];
-        print_r($this -> driver);
-        print_r($this -> hostname);
-        print_r($this -> database);
-        print_r($this -> username);
-        print_r($this -> password);
     }
 
     public function connect(): PDO
