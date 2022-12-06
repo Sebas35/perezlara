@@ -51,7 +51,7 @@ function table_quotes(data) {
             const img = document.createElement ('img');
             img.dataset.id = ids_aseguradora_cotizante[index];
             img.className = 'img-insurers-quotes';
-            img.src = CLOUD.img + e.toString ();
+            img.src = CLOUD.insurer + e.toString ();
             img.role = 'option';
             second_td.appendChild (img);
             img.addEventListener('click', quote_data);

@@ -6,9 +6,9 @@ use ReflectionClass;
 
 trait TConstruct
 {
-    private function construct(...$args) :void
+    private function construct() :void
     {
-        if (!empty($args)) {
+        if (!empty($args = func_get_args())) {
             $end = end($args);
             if(is_string($end) && str_contains($end, '__construct')) {
                 method_exists($this, $method = array_splice($args,count($args) - 1 ,1)[0]);

@@ -32,6 +32,8 @@ async function login(e){
         if (data.error) {
             throw new Error(data.error);
         }
+        window.location.href = 'clientes';
+        // document.cookie = 'token=' + data['token'];
     } catch (e) {
         clave.value = null;
         alert_login.textContent = e;

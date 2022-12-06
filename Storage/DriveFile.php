@@ -2,25 +2,24 @@
 
 namespace Storage;
 
-use App\Traits\Models\TConstruct;
 use Exception;
 use Google\Client;
 use Google\Service\Drive;
 
 class DriveFile extends GoogleService
 {
-    use TConstruct;
-
     private string $id;
     private Drive $drive_service;
 
     public function __construct()
     {
-        parent::__construct(func_get_args());
-        $client = new Client();
-        $client -> useApplicationDefaultCredentials();
-        $client -> addScope(Drive::DRIVE_FILE);
-        $this -> drive_service = new Drive($client);
+        if (!empty($args = func_get_args())) {
+            parent ::__construct($args);
+            $client = new Client();
+            $client -> useApplicationDefaultCredentials();
+            $client -> addScope(Drive::DRIVE_FILE);
+            $this -> drive_service = new Drive($client);
+        }
     }
 
     public function __construct1(string $id) :void

@@ -105,8 +105,8 @@ class UserController extends Controller
                 'data' => $login,
             ];
             $jwt = JWT::encode($payload, $_ENV['PRIVATE_KEY'],'RS256');
-            setcookie('token',$jwt);
-            echo json_encode($jwt);
+            setcookie('x-token', hash('sha256',$jwt), time() + 3600, '/');
+            echo json_encode(['success' => true]);
 //            $decoded = JWT::decode($jwt, new Key($_ENV['PUBLIC_KEY'], 'RS256'));
         } catch (Exception $e) {
             echo json_encode(['error' => $e -> getMessage()]);
