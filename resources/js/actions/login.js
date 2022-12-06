@@ -32,7 +32,7 @@ async function login(e){
         if (data.error) {
             throw new Error(data.error);
         }
-        window.location.href = 'clientes';
+        window.location.href = 'dashboard';
         // document.cookie = 'token=' + data['token'];
     } catch (e) {
         clave.value = null;
